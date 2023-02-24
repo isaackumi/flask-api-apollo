@@ -15,7 +15,7 @@ def get_contacts():
     query = {}
     query['api_key'] = API_KEY
     # query['q_organization_domains'] = "apollo.io\ngoogle.com"
-    query['q_organization_domains'] = "apollo.io"
+    query['q_organization_domains'] = "taste.cz\ncolop.co.uk"
     query['page'] = post_data.get('page')
     query['page_titles'] = post_data.get('person_titles')
     query['per_page'] = post_data.get('per_page')
