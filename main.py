@@ -17,6 +17,8 @@ def get_contacts():
     query['q_organization_domains'] = "apollo.io\ngoogle.com"
     query['page'] = post_data.get('page')
     query['page_titles'] = post_data.get('person_titles')
+    query['per_page'] = post_data.get('per_page')
+    # print(query)
     response = requests.post(url=API_URL, json=query)
     response_data = response.json() if response.status_code == 200 else {}
     # return jsonify(response_data)
@@ -25,6 +27,10 @@ def get_contacts():
 
     #  Looop through data a save releveant information to csv file
     people = response_data.get('people')
+    print(f" Type -> {type(people)}")
+    print(f" All records -> {len(people)}")
+    # print(f" People -> {people}")
+
     extracted_data = []
     csv_headers = [
     
@@ -45,6 +51,14 @@ def get_contacts():
         ])
 
     
+# save CSV to local machine
+    with open('{}.csv'.format('extracted_data'),'w', encoding='UTF8', newline="") as file:
+                writer = csv.writer(file)
+                print("Writing data to CSV.....")
+                writer.writerow(csv_headers)
+                writer.writerows(extracted_data)
+
+# save CSV to S3 bucket
 
     return extracted_data
 
