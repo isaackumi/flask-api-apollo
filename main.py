@@ -4,8 +4,14 @@ import json
 import os
 import csv
 import pandas as pd
+from dotenv import load_dotenv
+from config.bucket import store_csv_in_s3
 
 app = Flask(__name__)
+
+
+# Load environment variables from .env file
+load_dotenv()
 
 API_KEY = "_MMrEbBZaxCKKJm_iPx3Zg"
 API_URL = "https://api.apollo.io/v1/mixed_people/search"
@@ -94,9 +100,15 @@ def get_contacts():
                 writer.writerow(csv_headers)
                 writer.writerows(extracted_data)
 
-# save CSV to S3 bucket
-# TODO: return value should be the link to the file stored in s3 bucket
     return people
+
+# save CSV to S3 bucket
+# store_csv_in_s3(bucket_name, file_name,file_content)
+# TODO: return value should be the link to the file stored in s3 bucket
+    # link = store_csv_in_s3(os.environ['AWS_BUCKET_NAME'], extracted_data, 'extracted_data')
+    # return {
+    #     "link": link,
+    # }
 
 
 

@@ -1,11 +1,12 @@
 import boto3
 from dotenv import load_dotenv
 import os
+import io
 
 # Load environment variables from .env file
 load_dotenv()
 
-def store_csv_in_s3(bucket_name, file_name, file_content):
+def store_csv_in_s3(bucket_name, file_name,file_content):
     """
     Store a CSV file in an S3 bucket and return the URL.
 
@@ -21,8 +22,11 @@ def store_csv_in_s3(bucket_name, file_name, file_content):
     if not bucket_exists(bucket_name):
         s3.create_bucket(Bucket=bucket_name)
 
+    # Create a file-like object from the string content
+    file_obj = io.StringIO(file_content)
+
     # Upload the file to S3
-    s3.upload_fileobj(file_content, bucket_name, file_name)
+    s3.upload_file(file_obj, bucket_name, file_name)
 
     # Set the object ACL to public-read
     s3.put_object_acl(ACL='public-read', Bucket=bucket_name, Key=file_name)
