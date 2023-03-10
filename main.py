@@ -9,6 +9,9 @@ app = Flask(__name__)
 
 API_KEY = "_MMrEbBZaxCKKJm_iPx3Zg"
 API_URL = "https://api.apollo.io/v1/mixed_people/search"
+
+
+
 @app.post("/contacts")
 def get_contacts():
     post_data = rq.json
@@ -81,13 +84,6 @@ def get_contacts():
 
                     
 
-
-
-                    
-        #             people[person].get('sanitized_phone'),
-        #             people[person].get('linkedin_url'),
-        #             people[person].get('photo_url'),
-        #             people[person].get('twitter_url'),
         ])
 
     # filepath = os.path.join(app.root_path,'extracted_data/extracted_data.csv')
@@ -99,7 +95,6 @@ def get_contacts():
                 writer.writerows(extracted_data)
 
 # save CSV to S3 bucket
-
 # TODO: return value should be the link to the file stored in s3 bucket
     return people
 
